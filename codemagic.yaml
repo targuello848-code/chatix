@@ -16,6 +16,19 @@ workflows:
           cp -r lib myapp/
           cp pubspec.yaml myapp/
 
+      - name: Add Firebase config
+        script: |
+          mkdir -p myapp/android/app
+          cp android/app/google-services.json myapp/android/app/
+
+      - name: Add Google Services plugin
+        script: |
+          echo "apply plugin: 'com.google.gms.google-services'" >> myapp/android/app/build.gradle
+
+      - name: Add classpath
+        script: |
+          sed -i "/dependencies {/a classpath 'com.google.gms:google-services:4.3.15'" myapp/android/build.gradle
+
       - name: Get packages
         working_directory: myapp
         script: flutter pub get
