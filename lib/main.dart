@@ -4,7 +4,12 @@ import 'screens/chat_screen.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  await Firebase.initializeApp();
+
+  try {
+    await Firebase.initializeApp();
+  } catch (e) {
+    print("ERROR FIREBASE: $e");
+  }
 
   runApp(const MyApp());
 }
