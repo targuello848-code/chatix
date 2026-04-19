@@ -1,0 +1,28 @@
+workflows:
+  build-apk:
+    name: Build APK
+
+    environment:
+      flutter: stable
+
+    scripts:
+      - name: Create project
+        script: flutter create myapp
+
+      - name: Copy files
+        script: |
+          rm -rf myapp/lib
+          rm myapp/pubspec.yaml
+          cp -r lib myapp/
+          cp pubspec.yaml myapp/
+
+      - name: Get packages
+        working_directory: myapp
+        script: flutter pub get
+
+      - name: Build APK
+        working_directory: myapp
+        script: flutter build apk --debug
+
+    artifacts:
+      - myapp/build/app/outputs/flutter-apk/app-debug.apk
